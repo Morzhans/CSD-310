@@ -14,7 +14,7 @@ config = {
 try:
     db = mysql.connector.connect(**config)
         
-    print("\n Database use {} connect to MyAQL on host {} with database {}", format(config["user"], config["databse"]))
+    print("\n Database use {} connect to MySQL on host {} with database {}", format(config["user"], config["databse"]))
         
     input("\n\n Press any key to continue...")
         
@@ -30,4 +30,3 @@ except mysql.connector.Error as err:
             
 finally:
     db.close()
-}
