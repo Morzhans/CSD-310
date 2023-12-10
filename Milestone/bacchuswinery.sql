@@ -4,55 +4,55 @@ CREATE DATABASE bacchus;
 USE bacchus;
 
 CREATE TABLE suppliers (
-    id int auto_increment primary key,
+    suppliers_id int auto_increment primary key,
     name varchar(100)
 );
 
 CREATE TABLE supply(
-    id int auto_increment primary key,
+    supply_id int auto_increment primary key,
     name varchar(100),
     quantity int
 );
 
 CREATE TABLE shipments(
-    id int auto_increment primary key,
+    shipments_id int auto_increment primary key,
     purchase_number int,
     supply_id int,
     supply_quantity int,
     expected_date date,
     actual_date date,
     supplier_id int,
-    CONSTRAINT FOREIGN KEY (supply_id) REFERENCES supply(id),
-    CONSTRAINT FOREIGN KEY (supplier_id) REFERENCES suppliers(id)
+    CONSTRAINT FOREIGN KEY (supply_id) REFERENCES supply(supply_id),
+    CONSTRAINT FOREIGN KEY (supplier_id) REFERENCES suppliers(suppliers_id)
 );
 
 CREATE TABLE employees
 (
-    id         int auto_increment primary key,
+    employees_id         int auto_increment primary key,
     l_name     varchar(100),
     f_name     varchar(100),
     position   varchar(100),
     manager_id int,
-    CONSTRAINT FOREIGN KEY (manager_id) REFERENCES employees (id)
+    CONSTRAINT FOREIGN KEY (manager_id) REFERENCES employees (employees_id)
 );
 
 CREATE TABLE hours (
-    id int auto_increment primary key,
+    hours_id int auto_increment primary key,
     employee_id int,
     hours int,
     fiscal_week int,
-    CONSTRAINT FOREIGN KEY (employee_id) REFERENCES employees(id)
+    CONSTRAINT FOREIGN KEY (employee_id) REFERENCES employees(employees_id)
 );
 
 CREATE TABLE wines(
-    id int auto_increment primary key,
+    wine_id int auto_increment primary key,
     name varchar(100),
     onhand int,
     price DECIMAL(19,2)
 );
 
 CREATE TABLE distributer(
-    id int auto_increment primary key,
+    distributer_id int auto_increment primary key,
     name varchar(100)
 );
 CREATE TABLE receipts(
@@ -62,13 +62,13 @@ CREATE TABLE receipts(
   actual_date date
 );
 CREATE TABLE sales(
-    id int primary key auto_increment,
+    sales_id int primary key auto_increment,
     receipt_number int,
     wine_id int,
     quantity int,
     distributer_id int,
-    CONSTRAINT FOREIGN KEY (wine_id) REFERENCES wines(id),
-    CONSTRAINT FOREIGN KEY (distributer_id) REFERENCES distributer(id),
+    CONSTRAINT FOREIGN KEY (wine_id) REFERENCES wines(wine_id),
+    CONSTRAINT FOREIGN KEY (distributer_id) REFERENCES distributer(distributer_id),
     CONSTRAINT FOREIGN KEY (receipt_number) REFERENCES receipts(receipt_number)
 );
 
@@ -92,19 +92,25 @@ INSERT INTO shipments (purchase_number, supply_id, supply_quantity, expected_dat
 INSERT INTO shipments (purchase_number, supply_id, supply_quantity, expected_date, actual_date, supplier_id) VALUES (981791, 4,100, '2023-11-25', '2023-11-25',2);
 INSERT INTO shipments (purchase_number, supply_id, supply_quantity, expected_date, actual_date, supplier_id) VALUES (981850, 5,100, '2023-11-25', '2023-11-25',3);
 INSERT INTO shipments (purchase_number, supply_id, supply_quantity, expected_date, actual_date, supplier_id) VALUES (981458, 6,100, '2023-11-25', '2023-11-25',3);
+insert into shipments (purchase_number, supply_id, supply_quantity, expected_date, actual_date, supplier_id) VALUES (12345,1,12,'2023-11-15','2023-11-25', 2);
 
 INSERT INTO employees (l_name, f_name, position, manager_id) VALUES ('Collins', 'Janet', 'Finance and Payroll', null);
 INSERT INTO employees (l_name, f_name, position, manager_id) VALUES ('Murphy', 'Roz', 'Marketing', null);
-INSERT INTO employees (l_name, f_name, position, manager_id) VALUES ('Ulrich', 'Bob', 'Marketing', 2);
+INSERT INTO employees (l_name, f_name, position, manager_id) VALUES ('Ulrich', 'Bob', 'Marketing', null);
 INSERT INTO employees (l_name, f_name, position, manager_id) VALUES ('Doyle', 'Henry', 'Production', null);
 INSERT INTO employees (l_name, f_name, position, manager_id) VALUES ('Costanza', 'Maria', 'Distribution', null);
 INSERT INTO employees (l_name, f_name, position, manager_id) VALUES ('Bacchus', 'Davis', 'Owner', null);
 INSERT INTO employees (l_name, f_name, position, manager_id) VALUES ('Bacchus', 'Stan', 'Owner', null);
 
 INSERT INTO hours (employee_id, hours, fiscal_week) VALUES (1, 40 ,1);
+INSERT INTO hours (employee_id, hours, fiscal_week) VALUES (1, 38 ,13);
 INSERT INTO hours (employee_id, hours, fiscal_week) VALUES (2, 54 ,1);
+INSERT INTO hours (employee_id, hours, fiscal_week) VALUES (2, 44 ,13);
 INSERT INTO hours (employee_id, hours, fiscal_week) VALUES (3, 45 ,1);
+INSERT INTO hours (employee_id, hours, fiscal_week) VALUES (3, 50 ,13);
 INSERT INTO hours (employee_id, hours, fiscal_week) VALUES (4, 56 ,1);
+INSERT INTO hours (employee_id, hours, fiscal_week) VALUES (4, 48 ,13);
+INSERT INTO hours (employee_id, hours, fiscal_week) VALUES (4, 40 ,26);
 INSERT INTO hours (employee_id, hours, fiscal_week) VALUES (5, 48 ,1);
 INSERT INTO hours (employee_id, hours, fiscal_week) VALUES (6, 59 ,1);
 INSERT INTO hours (employee_id, hours, fiscal_week) VALUES (7, 62 ,1);
@@ -116,7 +122,7 @@ INSERT INTO wines (name, onhand, price) VALUES ('Chardonnay', 31, 19.99);
 
 INSERT INTO distributer (name) VALUES ('Great Value Wine Sales');
 INSERT INTO distributer (name) VALUES ('WineMart');
-INSERT INTO distributer (name) VALUES ('Great Value Wine Sales');
+INSERT INTO distributer (name) VALUES ('Wine and Dine');
 INSERT INTO distributer (name) VALUES ('Wine Sale');
 INSERT INTO distributer (name) VALUES ('Wine and More');
 INSERT INTO distributer (name) VALUES ('Wineys');
