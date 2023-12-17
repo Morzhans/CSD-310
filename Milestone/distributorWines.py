@@ -19,12 +19,12 @@ try:
 
     input("\n\n Press any key to continue...")
 
-    cursor.execute("SELECT DISTINCT distributer.name, wines.name from sales "
-                   "join distributer on distributer.distributer_id = sales.distributer_id "
-                   "join wines on wines.wine_id = sales.wine_id")
+    cursor.execute("SELECT DISTINCT distributer.name, wines.name, sales.quantity FROM sales "
+                   "JOIN distributer ON distributer.distributer_id = sales.distributer_id "
+                   "JOIN wines ON wines.wine_id = sales.wine_id")
 
     rows = cursor.fetchall()
-    fieldNameArray = ['Name', 'Wine Name']
+    fieldNameArray = ['Distributer Name', 'Wine Name', 'Sales Amount', 'Results']
     now = datetime.now()
     print("\n --Distributer's Wine's Report ran on {}--".format(now.ctime()))
     
@@ -44,7 +44,7 @@ try:
             print(fieldNameArray[0] +  ": " + row[0])    
             wines = fieldNameArray[1] + ": "
             for entry in entryArray[1::2]:
-                wines = wines + entry + ", "
+                wines = wines + ", "
             print(wines[:-2])
 
             # removes duplicates
